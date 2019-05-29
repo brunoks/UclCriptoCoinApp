@@ -11,6 +11,7 @@ import requests
 import grequests
 import json
 import re
+import os
 import numpy as np
 from hashlib import sha256
 
@@ -348,4 +349,5 @@ def funcionaPorFavor():
     return jsonify('Funciona por favooor'), 200
 
 if __name__ == '__main__':
-    app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
