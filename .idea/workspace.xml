@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="479af64f-4dd9-4b96-99be-691ebc539c2e" name="Default Changelist" comment="" />
+    <list default="true" id="479af64f-4dd9-4b96-99be-691ebc539c2e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/uclcoin/minerador.py" beforeDir="false" afterPath="$PROJECT_DIR$/uclcoin/minerador.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -10,11 +12,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="345" column="32" selection-start-line="345" selection-start-column="13" selection-end-line="345" selection-end-column="32" />
+            <state relative-caret-position="619">
+              <caret line="345" column="61" lean-forward="true" selection-start-line="345" selection-start-column="61" selection-end-line="345" selection-end-column="61" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/uclcoin/minerador.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="16" column="51" selection-start-line="16" selection-start-column="51" selection-end-line="16" selection-end-column="51" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -56,6 +70,7 @@
         <option value="$PROJECT_DIR$/Pipfile.py" />
         <option value="$PROJECT_DIR$/Procfile" />
         <option value="$PROJECT_DIR$/app.py" />
+        <option value="$PROJECT_DIR$/uclcoin/minerador.py" />
       </list>
     </option>
   </component>
@@ -74,6 +89,11 @@
             <path>
               <item name="Hiroku" type="b2602c69:ProjectViewProjectNode" />
               <item name="Hiroku" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Hiroku" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Hiroku" type="462c0819:PsiDirectoryNode" />
+              <item name="uclcoin" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -131,12 +151,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559094876163</updated>
-      <workItem from="1559094884105" duration="2504000" />
+      <workItem from="1559094884105" duration="2779000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2504000" />
+    <option name="totallyTimeSpent" value="2779000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="823" extended-state="6" />
@@ -195,8 +215,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="345" column="32" selection-start-line="345" selection-start-column="13" selection-end-line="345" selection-end-column="32" />
+        <state relative-caret-position="619">
+          <caret line="345" column="61" lean-forward="true" selection-start-line="345" selection-start-column="61" selection-end-line="345" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/uclcoin/minerador.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="51" selection-start-line="16" selection-start-column="51" selection-end-line="16" selection-end-column="51" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
