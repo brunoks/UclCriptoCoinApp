@@ -344,7 +344,7 @@ def generateWallet():
     return jsonify(data), 200
 
 @app.route('/generate_public_key/<address>', methods=['GET'])
-def generateWallet(address):
+def generatePublicKey(address):
     wallet = KeyPair(address)
     data = {
         'public_key':wallet.public_key
