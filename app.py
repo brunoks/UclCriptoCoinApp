@@ -343,10 +343,13 @@ def generateWallet():
     }
     return jsonify(data), 200
 
-@app.route('/', methods=['GET'])
-def funcionaPorFavor():
-
-    return jsonify('Funciona por favooor'), 200
+@app.route('/generate_public_key/<address>', methods=['GET'])
+def generateWallet(address):
+    wallet = KeyPair(address)
+    data = {
+        'public_key':wallet.public_key
+    }
+    return jsonify(data), 200
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
