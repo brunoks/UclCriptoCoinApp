@@ -4,18 +4,22 @@ import json
 from collections import namedtuple
 
 
-wallet = KeyPair('')
-r = requests.get('https://uclcriptocoin.herokuapp.com/block/minable/' + wallet.public_key)
-print(r.text)
-last_block = json.loads(r.text)
-block = Block.from_dict(last_block["block"])
-difficulty = last_block["difficulty"]
 
-while block.current_hash[:difficulty].count('0') < difficulty:
-    block.nonce += 1
-    block.recalculate_hash()
+def minerador():
+    wallet = KeyPair('')
+    r = requests.get('https://uclcriptocoin.herokuapp.com/block/minable/' + wallet.public_key)
+    print(r.text)
+    last_block = json.loads(r.text)
+    block = Block.from_dict(last_block["block"])
+    difficulty = last_block["difficulty"]
 
-data = json.dumps(block, default=lambda x: x.__dict__)
+    while block.current_hash[:difficulty].count('0') < difficulty:
+        block.nonce += 1
+        block.recalculate_hash()
 
-r = requests.post('https://uclcriptocoin.herokuapp.com/block',data,json=True)
-print(r.text)
+    data = json.dumps(block, default=lambda x: x.__dict__)
+
+    r = requests.post('https://uclcriptocoin.herokuapp.com/block',data,json=True)
+    print(r.text)
+
+    return
