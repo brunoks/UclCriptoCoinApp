@@ -19,16 +19,16 @@ except ModuleNotFoundError:
 def genesis_block():
     genesis_transaction_one = Transaction(
         '0',
-        '032b72046d335b5318a672763338b08b9642225189ab3f0cba777622cfee0fc07b',
-        1,
+        '',
+        10,
         0,
         0,
         ''
     )
     genesis_transaction_two = Transaction(
         '0',
-        '02f846677f65911f140a42af8fe7c1e5cbc7d148c44057ce49ee0cd0a72b21df4f',
-        1,
+        '',
+        10,
         0,
         0,
         ''
