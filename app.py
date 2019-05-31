@@ -351,7 +351,7 @@ def generatePublicKey(address):
     }
     return jsonify(data), 200
 
-@app.route('/minerador_bloco/<address>', methods=['GET'])
+@app.route('/minerador_bloco/<address>', methods=['POST'])
 def mineradorBloco(address):
     data = minerarBloco(address)
     return jsonify(data), 200

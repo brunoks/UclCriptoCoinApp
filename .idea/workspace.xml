@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="479af64f-4dd9-4b96-99be-691ebc539c2e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uclcoin/minerador.py" beforeDir="false" afterPath="$PROJECT_DIR$/uclcoin/minerador.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="55">
-              <caret line="355" column="32" selection-start-line="355" selection-start-column="32" selection-end-line="355" selection-end-column="32" />
+            <state relative-caret-position="157">
+              <caret line="353" column="55" selection-start-line="353" selection-start-column="55" selection-end-line="353" selection-end-column="55" />
             </state>
           </provider>
         </entry>
@@ -252,12 +250,12 @@
       <workItem from="1559094884105" duration="3503000" />
       <workItem from="1559176109382" duration="686000" />
       <workItem from="1559182790854" duration="3168000" />
-      <workItem from="1559263095981" duration="4274000" />
+      <workItem from="1559263095981" duration="4488000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11631000" />
+    <option name="totallyTimeSpent" value="11845000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="823" extended-state="6" />
@@ -353,8 +351,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55">
-          <caret line="355" column="32" selection-start-line="355" selection-start-column="32" selection-end-line="355" selection-end-column="32" />
+        <state relative-caret-position="157">
+          <caret line="353" column="55" selection-start-line="353" selection-start-column="55" selection-end-line="353" selection-end-column="55" />
         </state>
       </provider>
     </entry>
