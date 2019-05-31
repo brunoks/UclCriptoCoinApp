@@ -6,7 +6,7 @@ from collections import namedtuple
 
 
 def minerador():
-    wallet = KeyPair('')
+    wallet = KeyPair('10c3e7593eb0525c10652c835e85f8e709e897bf891ef9fd9451c94755690ccf')
     r = requests.get('https://uclcriptocoin.herokuapp.com/block/minable/' + wallet.public_key)
     print(r.text)
     last_block = json.loads(r.text)
