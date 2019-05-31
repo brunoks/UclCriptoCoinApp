@@ -229,6 +229,7 @@ def add_block():
         responses = grequests.map(rs)
         validated_chains = 1
         for response in responses:
+            print(response)
             if response.status_code == 201:
                 validated_chains += 1
                 # 2 porque esta já conta como uma
@@ -265,6 +266,10 @@ def validate_block():
     try:
         block = request.get_json(force=True)
         block = Block.from_dict(block)
+        blockchain = BlockChain()
+
+        blockchain.validate_block(block)
+        print(blockchain)
         return jsonify({'message': f'Block #{block.index} is a valid block!'}), 201
     except (KeyError, TypeError, ValueError):
         return jsonify({'message': f'Invalid block format'}), 400
@@ -358,7 +363,7 @@ def mineradorBloco(address):
 
 def minerarBloco(address):
     wallet = KeyPair(address)
-    r = requests.get('https://uclcriptocoin.herokuapp.com/block/minable/' + wallet.public_key)
+    r = requests.post('https://uclcriptocoin.herokuapp.com/block/minable/' + wallet.public_key)
     print(r.text)
     last_block = json.loads(r.text)
     block = Block.from_dict(last_block["block"])
