@@ -351,6 +351,38 @@ def generatePublicKey(address):
     }
     return jsonify(data), 200
 
+@app.route('/minerador_bloco/<address>', methods=['GET'])
+def mineradorBloco(address):
+    data = minerarBloco(address)
+    return jsonify(data), 200
+
+def minerarBloco(address):
+    wallet = KeyPair(address)
+    r = requests.get('https://uclcriptocoin.herokuapp.com/block/minable/' + wallet.public_key)
+    print(r.text)
+    last_block = json.loads(r.text)
+    block = Block.from_dict(last_block["block"])
+    difficulty = last_block["difficulty"]
+
+    while block.current_hash[:difficulty].count('0') < difficulty:
+        block.nonce += 1
+        block.recalculate_hash()
+
+    data = json.dumps(block, default=lambda x: x.__dict__)
+
+    r = requests.post('https://uclcriptocoin.herokuapp.com/block',data,json=True)
+    print(r.text)
+    pesquisarBlocoPendente()
+
+def pesquisarBlocoPendente():
+    r = requests.get('https://uclcriptocoin.herokuapp.com/pending_transactions')
+
+    data = r.json()
+    if int(len(data['transactions']) > 0):
+        minerarBloco('10c3e7593eb0525c10652c835e85f8e709e897bf891ef9fd9451c94755690ccf')
+    else:
+        return 'Não tem mais bloco'
+
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
