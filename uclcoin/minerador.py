@@ -21,5 +21,15 @@ def minerador():
 
     r = requests.post('https://uclcriptocoin.herokuapp.com/block',data,json=True)
     print(r.text)
+    pesquisarBlocoPendente()
 
-    return
+def pesquisarBlocoPendente():
+    r = requests.get('https://uclcriptocoin.herokuapp.com/pending_transactions')
+
+    data = r.json()
+    if int(len(data['transactions']) > 0):
+        minerador()
+    else:
+        print('Não tem mais bloco')
+
+pesquisarBlocoPendente()
