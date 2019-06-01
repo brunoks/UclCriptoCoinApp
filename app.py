@@ -22,8 +22,19 @@ peers = set()
 
 app = Flask(__name__)
 
+server = MongoClient('mongodb+srv://pi:pi@cluster0-tdudc.azure.mongodb.net/test?retryWrites=true')
+uclcoindb = server.uclcoin
+blockchain = BlockChain(mongodb=uclcoindb)
 
-node = []
+peers = set()
+
+app = Flask(__name__)
+
+
+# TODO
+# endpoint to return the node's copy of the chain.
+# Our application will be using this endpoint to query
+# all the posts to display.
 @app.route('/chain', methods=['GET'])
 def get_chain():
     # make sure we've the longest chain
@@ -162,13 +173,12 @@ def consensus():
     global blockchain
 
     longest_chain = None
-    current_len = blockchain._count_blocks
-
-    rs = (grequests.get(f'{node["address"]}/chain', data=request.data) for node in json.loads(get_nodes()))
+    current_len = blockchain._blocks.count()
+    rs = (grequests.get(f'{node["address"]}/chain') for node in json.loads(get_nodes()))
     responses = grequests.map(rs)
 
     for response in responses:
-        if response.status_code == 201:
+        if response.status_code == 200:
             length = response.json()['length']
             chain = response.json()['chain']
             if length > current_len and blockchain.check_chain_validity(chain):
@@ -188,9 +198,9 @@ def announce_new_block(block):
     Other blocks can simply verify the proof of work and add it to their
     respective chains.
     """
-    node = get_nodes()
-    for node["address"] in json.loads(get_nodes()):
-        url = "{}/add_block".format(node)
+    for node in json.loads(get_nodes()):
+        print(node["address"])
+        url = "{}/add_block".format(node["address"])
         requests.post(url, data=json.dumps(block.__dict__, sort_keys=True))
 
 
