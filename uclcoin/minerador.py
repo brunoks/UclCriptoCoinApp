@@ -1,4 +1,4 @@
-from uclcoin import Block, KeyPair
+from uclcoin import Block, KeyPair, BlockChain
 import requests
 import json
 from collections import namedtuple
@@ -18,11 +18,15 @@ class Minerador(object):
             block.nonce += 1
             block.recalculate_hash()
 
+        blockchain = BlockChain()
+        #validate = blockchain.validate_block(block)
+        #print(validate)
         data = json.dumps(block, default=lambda x: x.__dict__)
-
-        r = requests.post('https://uclcriptocoin.herokuapp.com/block',data,json=True)
-        print(r.text)
-        self.pesquisarBlocoPendente()
+        print(data)
+        return block.current_hash
+        #r = requests.post('https://uclcriptocoin.herokuapp.com/block',data,json=True)
+        #print(r.text)
+        #self.pesquisarBlocoPendente()
 
     def pesquisarBlocoPendente(self):
         r = requests.get('https://uclcriptocoin.herokuapp.com/pending_transactions')
@@ -35,4 +39,8 @@ class Minerador(object):
 
 minerador = Minerador()
 
-minerador.pesquisarBlocoPendente()
+current1 = minerador.minerarBloco('10c3e7593eb0525c10652c835e85f8e709e897bf891ef9fd9451c94755690ccf')
+print(current1)
+
+current2 = minerador.minerarBloco('85d7036e4451228c64951b78a16e9de0fd360c852f5b85601b1fbb7b0e322b8a')
+print(current2)

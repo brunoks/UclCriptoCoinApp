@@ -36,15 +36,15 @@ def get_chain():
         chain_data.append(block.__dict__)
 
     for chain in chain_data:
-        for i,transaction in enumerate(chain['transactions']):
+        for i, transaction in enumerate(chain['transactions']):
             tempTrans = chain['transactions'][i]
             jsonTrans = json.dumps(tempTrans.__str__())
-            chain['transactions'][i] = jsonTrans.replace("\"","*").replace("'","\"")
+            chain['transactions'][i] = jsonTrans.replace("\"", "*").replace("'", "\"")
 
     jsonText = json.dumps({"length": len(chain_data),
-                       "chain": chain_data,
-                       "peers": list(peers)}, sort_keys=True, indent=4)
-    return jsonText.replace("\"*","").replace("*\"","").replace("\\\"","\"")
+                           "chain": chain_data,
+                           "peers": list(peers)}, sort_keys=True, indent=4)
+    return jsonText.replace("\"*", "").replace("*\"", "").replace("\\\"", "\"")
 
 
 def extract_values(obj, key):
@@ -71,18 +71,20 @@ def extract_values(obj, key):
 # Get Nodes
 @app.route('/get_nodes', methods=['GET'])
 def get_nodes():
+    peers = extract_values(json.loads(requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text),
+                           'address')
     return requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text
 
 
 # endpoint to add new peers to the network.
 @app.route('/register_node', methods=['POST'])
 def register_new_peers():
-    node_address = request.get_json()["node_address"]
-    if not node_address:
+    address = request.get_json()["address"]
+    if not address:
         return "Invalid data", 400
 
     # Add the node to the peer list
-    peers.add(node_address)
+    peers.add(address)
 
     # Return the consensus blockchain to the newly registered node
     # so that he can sync
@@ -96,15 +98,15 @@ def register_with_existing_node():
     register current node with the node specified in the
     request, and sync the blockchain as well as peer data.
     """
-    node_address = json(request.get_json())["node_address"]
-    if not node_address:
+    address = json(request.get_json())["address"]
+    if not address:
         return "Invalid data", 400
 
-    data = {"node_address": request.host_url}
+    data = {"address": request.host_url}
     headers = {'Content-Type': "application/json"}
 
     # Make a request to register with remote node and obtain information
-    response = requests.post(node_address + "/register_node",
+    response = requests.post(address + "/register_node",
                              data=json.dumps(data), headers=headers)
 
     if response.status_code == 200:
@@ -154,6 +156,7 @@ def verify_and_add_block():
     if not added:
         return "The block was discarded by the node", 400
 
+
 def consensus():
     """
     Our simple consnsus algorithm. If a longer valid chain is
@@ -164,15 +167,16 @@ def consensus():
     longest_chain = None
     current_len = blockchain._count_blocks
 
-    for node in peers:
-        print('{}/chain'.format(node))
-        response = requests.get('{}chain'.format(node))
-        print("Content", response.content)
-        length = response.json()['length']
-        chain = response.json()['chain']
-        if length > current_len and blockchain.check_chain_validity(chain):
-            current_len = length
-            longest_chain = chain
+    rs = (grequests.get(f'{node["address"]}/chain', data=request.data) for node in json.loads(get_nodes()))
+    responses = grequests.map(rs)
+
+    for response in responses:
+        if response.status_code == 201:
+            length = response.json()['length']
+            chain = response.json()['chain']
+            if length > current_len and blockchain.check_chain_validity(chain):
+                current_len = length
+                longest_chain = chain
 
     if longest_chain:
         blockchain = longest_chain
@@ -187,8 +191,8 @@ def announce_new_block(block):
     Other blocks can simply verify the proof of work and add it to their
     respective chains.
     """
-    for peer in peers:
-        url = "{}add_block".format(peer)
+    for node["address"] in json.loads(get_nodes()):
+        url = "{}/add_block".format(node)
         requests.post(url, data=json.dumps(block.__dict__, sort_keys=True))
 
 
@@ -229,7 +233,6 @@ def add_block():
         responses = grequests.map(rs)
         validated_chains = 1
         for response in responses:
-            print(response)
             if response.status_code == 201:
                 validated_chains += 1
                 # 2 porque esta já conta como uma
@@ -266,10 +269,6 @@ def validate_block():
     try:
         block = request.get_json(force=True)
         block = Block.from_dict(block)
-        blockchain = BlockChain()
-
-        blockchain.validate_block(block)
-        print(blockchain)
         return jsonify({'message': f'Block #{block.index} is a valid block!'}), 201
     except (KeyError, TypeError, ValueError):
         return jsonify({'message': f'Invalid block format'}), 400
@@ -355,38 +354,6 @@ def generatePublicKey(address):
         'public_key':wallet.public_key
     }
     return jsonify(data), 200
-
-@app.route('/minerador_bloco/<address>', methods=['POST'])
-def mineradorBloco(address):
-    data = minerarBloco(address)
-    return jsonify(data), 200
-
-def minerarBloco(address):
-    wallet = KeyPair(address)
-    r = requests.post('https://uclcriptocoin.herokuapp.com/block/minable/' + wallet.public_key)
-    print(r.text)
-    last_block = json.loads(r.text)
-    block = Block.from_dict(last_block["block"])
-    difficulty = last_block["difficulty"]
-
-    while block.current_hash[:difficulty].count('0') < difficulty:
-        block.nonce += 1
-        block.recalculate_hash()
-
-    data = json.dumps(block, default=lambda x: x.__dict__)
-
-    r = requests.post('https://uclcriptocoin.herokuapp.com/block',data,json=True)
-    print(r.text)
-    pesquisarBlocoPendente()
-
-def pesquisarBlocoPendente():
-    r = requests.get('https://uclcriptocoin.herokuapp.com/pending_transactions')
-
-    data = r.json()
-    if int(len(data['transactions']) > 0):
-        minerarBloco('10c3e7593eb0525c10652c835e85f8e709e897bf891ef9fd9451c94755690ccf')
-    else:
-        return 'Não tem mais bloco'
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
