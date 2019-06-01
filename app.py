@@ -23,10 +23,7 @@ peers = set()
 app = Flask(__name__)
 
 
-# TODO
-# endpoint to return the node's copy of the chain.
-# Our application will be using this endpoint to query
-# all the posts to display.
+node = []
 @app.route('/chain', methods=['GET'])
 def get_chain():
     # make sure we've the longest chain
@@ -191,6 +188,7 @@ def announce_new_block(block):
     Other blocks can simply verify the proof of work and add it to their
     respective chains.
     """
+    node = get_nodes()
     for node["address"] in json.loads(get_nodes()):
         url = "{}/add_block".format(node)
         requests.post(url, data=json.dumps(block.__dict__, sort_keys=True))
