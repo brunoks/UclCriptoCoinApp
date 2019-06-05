@@ -23,15 +23,19 @@ peers = set()
 app = Flask(__name__)
 domain = 'https://uclcriptocoin.herokuapp.com'
 
-@app.route('/get_nodes', methods=['GET'])
-def get_nodes():
+@app.route('/fake', methods=['GET'])
+def fake():
+
     data = [
-        {'address':'https://uclcriptocoin.herokuapp.com'},
-        {'address': 'https://uclcriptocoin2.herokuapp.com'}
+        {"address":"https://uclcriptocoin.herokuapp.com"},
+        {"address":"https://uclcriptocoin2.herokuapp.com"}
     ]
     return jsonify(data), 200
-    #return requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text, 200
 
+@app.route('/get_nodes', methods=['GET'])
+def get_nodes():
+    #requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text, 200
+    return requests.get(f'{domain}/fake').text
 
 def consensus():
     """
@@ -44,6 +48,10 @@ def consensus():
     current_len = blockchain._blocks.count()
     current_transaction_let = blockchain
     print(current_transaction_let)
+    nodes = json.loads(get_nodes())
+
+    for node in nodes:
+        node["address"]
     rs = (grequests.get(f'{node["address"]}/chain') for node in json.loads(get_nodes()))
 
     responses = grequests.map(rs)
