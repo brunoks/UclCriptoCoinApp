@@ -21,7 +21,7 @@ blockchain = BlockChain(mongodb=uclcoindb)
 
 peers = set()
 app = Flask(__name__)
-domain = 'https://uclcriptocoin.herokuapp.com'
+domain = 'http://127.0.0.1:5000'
 
 
 # Get Nodes
@@ -38,9 +38,9 @@ def fake():
 
 @app.route('/get_nodes', methods=['GET'])
 def get_nodes():
-    return requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text, 200
+    #requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text, 200
 
-    #return requests.get('http://127.0.0.1:5000/fake').text
+    return requests.get('http://127.0.0.1:5000/fake').text
 
 def consensus():
     """
@@ -51,7 +51,7 @@ def consensus():
 
     result = False
     current_len = blockchain._blocks.count()
-    current_transaction_let = blockchain.get_latest_block()
+    current_transaction_let = blockchain
     print(current_transaction_let)
     rs = (grequests.get(f'{node["address"]}/chain') for node in json.loads(get_nodes()))
 
@@ -69,7 +69,7 @@ def consensus():
 
     return result
 
-consensus()
+#consensus()
 
 @app.route('/consensus', methods=['GET'])
 def get_consensus():
@@ -236,7 +236,7 @@ def add_block():
     try:
         block_json = request.get_json(force=True)
         block = Block.from_dict(block_json)
-        rs = (grequests.post(f'{node}/validate', data=request.data) for node in json.loads(get_nodes()))
+        rs = (grequests.post(f'{node}/validate', data=request.data) for node in ['http://127.0.0.1:5001','http://127.0.0.1:5000','http://127.0.0.1:5002'])#json.loads(get_nodes()))
         responses = grequests.map(rs)
         validated_chains = 1
         for response in responses:

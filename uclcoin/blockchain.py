@@ -19,7 +19,7 @@ except ModuleNotFoundError:
 def genesis_block():
     genesis_transaction_one = Transaction(
         '0',
-        '10c3e7593eb0525c10652c835e85f8e709e897bf891ef9fd9451c94755690ccf',
+        '032b72046d335b5318a672763338b08b9642225189ab3f0cba777622cfee0fc07b',
         1,
         0,
         0,
@@ -27,31 +27,14 @@ def genesis_block():
     )
     genesis_transaction_two = Transaction(
         '0',
-        '85d7036e4451228c64951b78a16e9de0fd360c852f5b85601b1fbb7b0e322b8a',
-        1,
-        0,
-        0,
-        ''
-    )
-    genesis_transaction_three= Transaction(
-        '0',
-        '32d383a62c4cbdb860438312674adf04e49caefd26137851f9c3cddeb28b847b',
+        '02f846677f65911f140a42af8fe7c1e5cbc7d148c44057ce49ee0cd0a72b21df4f',
         1,
         0,
         0,
         ''
     )
 
-    genesis_transaction_four = Transaction(
-        '0',
-        'a608f851c956df7f345c517e69701b814b3ae1d2b8a42199ab98659d44abb066',
-        1,
-        0,
-        0,
-        ''
-    )
-
-    genesis_transactions = [genesis_transaction_one, genesis_transaction_two, genesis_transaction_three, genesis_transaction_four]
+    genesis_transactions = [genesis_transaction_one, genesis_transaction_two]
     return Block(0, genesis_transactions, '000000000000000000000000000000000000000000000000000000000000000000', 0, 130898395)
 
 
