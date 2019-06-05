@@ -15,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="238" column="80" selection-start-line="238" selection-start-column="80" selection-end-line="238" selection-end-column="80" />
+            <state relative-caret-position="361">
+              <caret line="57" column="1" selection-start-line="57" selection-start-column="1" selection-end-line="57" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -113,7 +113,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>5b92a8cfea0de9bad2b58e948c862e818ec3e4a13b8c10f5fce450e7bf526880</find>
       <find>03ecd19ebc9454eb635670577c24ad34a61fa05c23ce47f142fe704f6b37f59708</find>
       <find>get_chain</find>
       <find>peers</find>
@@ -143,6 +142,7 @@
       <find>consen</find>
       <find>pending</find>
       <find>fake</find>
+      <find>127</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -313,12 +313,12 @@
       <workItem from="1559263095981" duration="9169000" />
       <workItem from="1559418114285" duration="710000" />
       <workItem from="1559492704420" duration="10315000" />
-      <workItem from="1559516828275" duration="13177000" />
+      <workItem from="1559516828275" duration="13421000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48645000" />
+    <option name="totallyTimeSpent" value="48889000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -448,8 +448,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="238" column="80" selection-start-line="238" selection-start-column="80" selection-end-line="238" selection-end-column="80" />
+        <state relative-caret-position="361">
+          <caret line="57" column="1" selection-start-line="57" selection-start-column="1" selection-end-line="57" selection-end-column="1" />
         </state>
       </provider>
     </entry>
