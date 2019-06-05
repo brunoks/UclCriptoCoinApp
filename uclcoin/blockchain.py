@@ -19,21 +19,39 @@ except ModuleNotFoundError:
 def genesis_block():
     genesis_transaction_one = Transaction(
         '0',
-        '',
-        10,
+        '10c3e7593eb0525c10652c835e85f8e709e897bf891ef9fd9451c94755690ccf',
+        1,
         0,
         0,
         ''
     )
     genesis_transaction_two = Transaction(
         '0',
-        '',
-        10,
+        '85d7036e4451228c64951b78a16e9de0fd360c852f5b85601b1fbb7b0e322b8a',
+        1,
         0,
         0,
         ''
     )
-    genesis_transactions = [genesis_transaction_one, genesis_transaction_two]
+    genesis_transaction_three= Transaction(
+        '0',
+        '32d383a62c4cbdb860438312674adf04e49caefd26137851f9c3cddeb28b847b',
+        1,
+        0,
+        0,
+        ''
+    )
+
+    genesis_transaction_four = Transaction(
+        '0',
+        'a608f851c956df7f345c517e69701b814b3ae1d2b8a42199ab98659d44abb066',
+        1,
+        0,
+        0,
+        ''
+    )
+
+    genesis_transactions = [genesis_transaction_one, genesis_transaction_two, genesis_transaction_three, genesis_transaction_four]
     return Block(0, genesis_transactions, '000000000000000000000000000000000000000000000000000000000000000000', 0, 130898395)
 
 
@@ -71,6 +89,9 @@ class BlockChain(object):
             self._blocks.insert_one(dict(block))
         else:
             self._blocks.append(block)
+
+    def clear(self):
+        self._blocks.drop()
 
     def calculate_hash_difficulty(self, index=None):
         if index is None:

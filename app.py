@@ -15,37 +15,84 @@ import os
 import numpy as np
 from hashlib import sha256
 
-server = MongoClient('mongodb+srv://bbk:123@cluster0-pwjcg.mongodb.net/test?retryWrites=true&w=majority')
+server = MongoClient('mongodb+srv://pi:pi@cluster0-tdudc.azure.mongodb.net/test?retryWrites=true')
 uclcoindb = server.uclcoin
 blockchain = BlockChain(mongodb=uclcoindb)
 
 peers = set()
-
 app = Flask(__name__)
+domain = 'http://127.0.0.1:5000'
 
 
-# TODO
-# endpoint to return the node's copy of the chain.
-# Our application will be using this endpoint to query
-# all the posts to display.
+# Get Nodes
+
+@app.route('/fake', methods=['GET'])
+def fake():
+
+    data = [
+        { "address":"http://127.0.0.1:5000"},
+        {"address":"http://127.0.0.1:5001"},
+        {"address":"http://127.0.0.1:5002"}
+    ]
+    return jsonify(data), 200
+
+@app.route('/get_nodes', methods=['GET'])
+def get_nodes():
+    #requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text, 200
+
+    return requests.get('http://127.0.0.1:5000/fake').text
+
+def consensus():
+    """
+    Our simple consnsus algorithm. If a longer valid chain is
+    found, our chain is replaced with it.
+    """
+    global blockchain
+
+    result = False
+    current_len = blockchain._blocks.count()
+    current_transaction_let = blockchain.get_latest_block()
+    print(current_transaction_let)
+    rs = (grequests.get(f'{node["address"]}/chain') for node in json.loads(get_nodes()))
+
+    responses = grequests.map(rs)
+
+    for response in responses:
+        if response != None and response.status_code == 200:
+            blocks = response.json()
+            if len(blocks) > current_len:
+                blockchain.clear()
+                for block in blocks:
+                    temp_block = Block.from_dict(block)
+                    blockchain.add_block(temp_block)
+                result = True
+
+    return result
+
+#consensus()
+
+@app.route('/consensus', methods=['GET'])
+def get_consensus():
+    local_consensus = consensus()
+    if local_consensus:
+        return jsonify({'message': f'Consensus updated'}), 201
+    return jsonify({'message': f'Consensus already updated'}), 400
+
 @app.route('/chain', methods=['GET'])
 def get_chain():
     # make sure we've the longest chain
-    consensus()
     chain_data = []
     for block in blockchain.blocks:
-        chain_data.append(block.__dict__)
+       chain_data.append(block.__dict__)
 
     for chain in chain_data:
-        for i, transaction in enumerate(chain['transactions']):
+        for i,transaction in enumerate(chain['transactions']):
             tempTrans = chain['transactions'][i]
             jsonTrans = json.dumps(tempTrans.__str__())
-            chain['transactions'][i] = jsonTrans.replace("\"", "*").replace("'", "\"")
+            chain['transactions'][i] = jsonTrans.replace("\"","*").replace("'","\"")
 
-    jsonText = json.dumps({"length": len(chain_data),
-                           "chain": chain_data,
-                           "peers": list(peers)}, sort_keys=True, indent=4)
-    return jsonText.replace("\"*", "").replace("*\"", "").replace("\\\"", "\"")
+    jsonText = json.dumps(chain_data, sort_keys=True, indent=4)
+    return jsonText.replace("\"*","").replace("*\"","").replace("\\\"","\"")
 
 
 def extract_values(obj, key):
@@ -67,15 +114,6 @@ def extract_values(obj, key):
 
     results = extract(obj, arr, key)
     return results
-
-
-# Get Nodes
-@app.route('/get_nodes', methods=['GET'])
-def get_nodes():
-    peers = extract_values(json.loads(requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text),
-                           'address')
-    return requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text
-
 
 # endpoint to add new peers to the network.
 @app.route('/register_node', methods=['POST'])
@@ -146,44 +184,11 @@ def create_chain_from_dump(chain_dump):
 @app.route('/add_block', methods=['POST'])
 def verify_and_add_block():
     block_data = request.get_json()
-    block = Block(block_data["index"],
-                  block_data["transactions"],
-                  block_data["previous_hash"],
-                  block_data["timestamp"])
+    print(block_data)
+    block = Block.from_dict(block_data)
+    blockchain.add_block(block)
 
-    proof = block_data['hash']
-    added = blockchain.add_block(block, proof)
-
-    if not added:
-        return "The block was discarded by the node", 400
-
-
-def consensus():
-    """
-    Our simple consnsus algorithm. If a longer valid chain is
-    found, our chain is replaced with it.
-    """
-    global blockchain
-
-    longest_chain = None
-    current_len = blockchain._blocks.count()
-    rs = (grequests.get(f'{node["address"]}/chain') for node in json.loads(get_nodes()))
-    responses = grequests.map(rs)
-
-    for response in responses:
-        if response.status_code == 200:
-            length = response.json()['length']
-            chain = response.json()['chain']
-            if length > current_len and blockchain.check_chain_validity(chain):
-                current_len = length
-                longest_chain = chain
-
-    if longest_chain:
-        blockchain = longest_chain
-        return True
-
-    return False
-
+    return "The block was added", 200
 
 def announce_new_block(block):
     """
@@ -192,9 +197,10 @@ def announce_new_block(block):
     respective chains.
     """
     for node in json.loads(get_nodes()):
-        print(node["address"])
-        url = "{}/add_block".format(node["address"])
-        requests.post(url, data=json.dumps(block.__dict__, sort_keys=True))
+        address = node['address']
+        if address != domain:
+            url = "{}/add_block".format(address)
+            requests.post(url, json=block)
 
 
 @app.route('/balance/<address>', methods=['GET'])
@@ -230,19 +236,21 @@ def add_block():
     try:
         block_json = request.get_json(force=True)
         block = Block.from_dict(block_json)
-        rs = (grequests.post(f'{node["address"]}/validate', data=request.data) for node in json.loads(get_nodes()))
+        rs = (grequests.post(f'{node}/validate', data=request.data) for node in ['http://127.0.0.1:5001','http://127.0.0.1:5000','http://127.0.0.1:5002'])#json.loads(get_nodes()))
         responses = grequests.map(rs)
         validated_chains = 1
         for response in responses:
+            print(response.status_code)
             if response.status_code == 201:
                 validated_chains += 1
                 # 2 porque esta já conta como uma
-                if validated_chains == 3:
-                    break
+            if validated_chains == 2:
+                break
 
-        if validated_chains == 3:
+        if validated_chains == 2:
+            print('cheguei')
             blockchain.add_block(block)
-            announce_new_block(block)
+            announce_new_block(block_json)
             return jsonify({'message': f'Block #{block.index} added to the Blockchain'}), 201
         else:
             return jsonify({'message': f'Block rejected: {block}'}), 400
@@ -299,7 +307,16 @@ def add_transaction():
 @app.route('/transaction/<private_key>/<public_key>/<value>', methods=['POST'])
 def add_transaction2(private_key, public_key, value):
     try:
+        consensus()
+
+        nodes = json.loads(get_nodes())
+        for node in nodes:
+            if node["address"] != domain:
+                print(node["address"])
+                (requests.post(f'{node["address"]}/transaction/' + private_key + "/" + public_key + "/" + value))
+
         wallet = KeyPair(private_key)
+
         transaction = wallet.create_transaction(public_key, float(value))
         blockchain.add_transaction(transaction)
         return jsonify({'message': f'Pending transaction {transaction.tx_hash} added to the Blockchain'}), 201
@@ -357,5 +374,6 @@ def generatePublicKey(address):
     return jsonify(data), 200
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    #port = int(os.environ.get("PORT", 5002))
+    app.run(host='127.0.0.1', port='5001', debug=True)
+    #app.run(host='0.0.0.0', port=port)
