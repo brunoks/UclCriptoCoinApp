@@ -29,7 +29,7 @@ def get_nodes():
         {'address':'https://uclcriptocoin.herokuapp.com'},
         {'address': 'https://uclcriptocoin2.herokuapp.com'}
     ]
-    return json(data), 200
+    return jsonify(data), 200
     #return requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text, 200
 
 
