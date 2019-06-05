@@ -25,7 +25,12 @@ domain = 'https://uclcriptocoin.herokuapp.com'
 
 @app.route('/get_nodes', methods=['GET'])
 def get_nodes():
-    return requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text, 200
+    data = [
+        {'address':'https://uclcriptocoin.herokuapp.com'},
+        {'address': 'https://uclcriptocoin2.herokuapp.com'}
+    ]
+    return json(data), 200
+    #return requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text, 200
 
 
 def consensus():
