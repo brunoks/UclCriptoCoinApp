@@ -15,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="53" column="40" selection-start-line="53" selection-start-column="40" selection-end-line="53" selection-end-column="40" />
+            <state relative-caret-position="259">
+              <caret line="238" column="80" selection-start-line="238" selection-start-column="80" selection-end-line="238" selection-end-column="80" />
             </state>
           </provider>
         </entry>
@@ -59,8 +59,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/uclcoin/blockchain.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="93" column="23" selection-start-line="93" selection-start-column="23" selection-end-line="93" selection-end-column="23" />
+            <state relative-caret-position="146">
+              <caret line="135" column="32" selection-start-line="135" selection-start-column="32" selection-end-line="135" selection-end-column="32" />
               <folding>
                 <element signature="e#30#41#0" expanded="true" />
               </folding>
@@ -113,7 +113,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>validate_block</find>
       <find>5b92a8cfea0de9bad2b58e948c862e818ec3e4a13b8c10f5fce450e7bf526880</find>
       <find>03ecd19ebc9454eb635670577c24ad34a61fa05c23ce47f142fe704f6b37f59708</find>
       <find>get_chain</find>
@@ -135,13 +134,15 @@
       <find>inable</find>
       <find>clear</find>
       <find>pending_transactions</find>
-      <find>pending</find>
       <find>/validate</find>
       <find>/block</find>
       <find>genesis_block</find>
       <find>transactions</find>
       <find>grequests</find>
       <find>map</find>
+      <find>consen</find>
+      <find>pending</find>
+      <find>fake</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -312,12 +313,12 @@
       <workItem from="1559263095981" duration="9169000" />
       <workItem from="1559418114285" duration="710000" />
       <workItem from="1559492704420" duration="10315000" />
-      <workItem from="1559516828275" duration="12793000" />
+      <workItem from="1559516828275" duration="13177000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48261000" />
+    <option name="totallyTimeSpent" value="48645000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -332,7 +333,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2746781" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2746781" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -346,7 +347,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5007153" side_tool="true" weight="0.32891566" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49928468" visible="true" weight="0.32891566" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49928468" visible="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -415,16 +416,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/uclcoin/blockchain.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="93" column="23" selection-start-line="93" selection-start-column="23" selection-end-line="93" selection-end-column="23" />
-          <folding>
-            <element signature="e#30#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deploy.cmd">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -445,10 +436,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/uclcoin/blockchain.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="135" column="32" selection-start-line="135" selection-start-column="32" selection-end-line="135" selection-end-column="32" />
+          <folding>
+            <element signature="e#30#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="53" column="40" selection-start-line="53" selection-start-column="40" selection-end-line="53" selection-end-column="40" />
+        <state relative-caret-position="259">
+          <caret line="238" column="80" selection-start-line="238" selection-start-column="80" selection-end-line="238" selection-end-column="80" />
         </state>
       </provider>
     </entry>

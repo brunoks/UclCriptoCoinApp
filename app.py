@@ -21,26 +21,12 @@ blockchain = BlockChain(mongodb=uclcoindb)
 
 peers = set()
 app = Flask(__name__)
-domain = 'http://127.0.0.1:5000'
-
-
-# Get Nodes
-
-@app.route('/fake', methods=['GET'])
-def fake():
-
-    data = [
-        { "address":"http://127.0.0.1:5000"},
-        {"address":"http://127.0.0.1:5001"},
-        {"address":"http://127.0.0.1:5002"}
-    ]
-    return jsonify(data), 200
+domain = 'https://uclcriptocoin.herokuapp.com'
 
 @app.route('/get_nodes', methods=['GET'])
 def get_nodes():
-    #requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text, 200
+    return requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text, 200
 
-    return requests.get('http://127.0.0.1:5000/fake').text
 
 def consensus():
     """
@@ -69,7 +55,7 @@ def consensus():
 
     return result
 
-#consensus()
+consensus()
 
 @app.route('/consensus', methods=['GET'])
 def get_consensus():
@@ -236,7 +222,7 @@ def add_block():
     try:
         block_json = request.get_json(force=True)
         block = Block.from_dict(block_json)
-        rs = (grequests.post(f'{node}/validate', data=request.data) for node in ['http://127.0.0.1:5001','http://127.0.0.1:5000','http://127.0.0.1:5002'])#json.loads(get_nodes()))
+        rs = (grequests.post(f'{node}/validate', data=request.data) for node in json.loads(get_nodes()))
         responses = grequests.map(rs)
         validated_chains = 1
         for response in responses:
@@ -309,12 +295,6 @@ def add_transaction2(private_key, public_key, value):
     try:
         consensus()
 
-        nodes = json.loads(get_nodes())
-        for node in nodes:
-            if node["address"] != domain:
-                print(node["address"])
-                (requests.post(f'{node["address"]}/transaction/' + private_key + "/" + public_key + "/" + value))
-
         wallet = KeyPair(private_key)
 
         transaction = wallet.create_transaction(public_key, float(value))
@@ -374,6 +354,6 @@ def generatePublicKey(address):
     return jsonify(data), 200
 
 if __name__ == '__main__':
-    #port = int(os.environ.get("PORT", 5002))
-    app.run(host='127.0.0.1', port='5001', debug=True)
-    #app.run(host='0.0.0.0', port=port)
+    port = int(os.environ.get("PORT", 5002))
+    #app.run(host='127.0.0.1', port='5001', debug=True)
+    app.run(host='0.0.0.0', port=port)
