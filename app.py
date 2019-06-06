@@ -306,11 +306,15 @@ def add_transaction():
 @app.route('/transaction/<private_key>/<public_key>/<value>', methods=['POST'])
 def add_transaction2(private_key, public_key, value):
     try:
-        consensus()
-
         wallet = KeyPair(private_key)
 
         transaction = wallet.create_transaction(public_key, float(value))
+
+        for node in json.loads(get_nodes()):
+            print(dict(transaction))
+            status = (requests.post(f'{node["address"]}/transaction', data=dict(transaction)))
+            print(status)
+
         blockchain.add_transaction(transaction)
         return jsonify({'message': f'Pending transaction {transaction.tx_hash} added to the Blockchain'}), 201
     except BlockchainException as bce:

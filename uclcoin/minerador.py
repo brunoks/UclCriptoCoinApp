@@ -9,7 +9,7 @@ class Minerador(object):
     def minerarBloco(self, address):
 
         wallet = KeyPair(address)
-        r = requests.get('http://127.0.0.1:5000/block/minable/' + wallet.public_key)
+        r = requests.get('https://uclcriptocoin.herokuapp.com/block/minable/' + wallet.public_key)
         print(r.text)
         last_block = json.loads(r.text)
         block = Block.from_dict(last_block["block"])
@@ -23,12 +23,12 @@ class Minerador(object):
         data = json.dumps(block, default=lambda x: x.__dict__)
         print(data)
 
-        r = requests.post('http://127.0.0.1:5000/block',data,json=True)
+        r = requests.post('https://uclcriptocoin.herokuapp.com/block',data,json=True)
         print(r.text)
         #self.pesquisarBlocoPendente()
 
     def pesquisarBlocoPendente(self):
-        r = requests.get('http://127.0.0.1:5000/pending_transactions')
+        r = requests.get('https://uclcriptocoin.herokuapp.com/pending_transactions')
 
         data = r.json()
         if int(len(data['transactions']) > 0):
