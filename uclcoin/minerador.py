@@ -35,14 +35,8 @@ class Minerador(object):
         else:
             return 'Não tem mais bloco'
 
-    def teste(self):
-
-        jay = requests.get('http://127.0.0.1:5000/consensus')
-        for dt in json.loads(jay):
-            print(dt)
-        return
 
 minerador = Minerador()
-minerador.teste()
-#current1 = minerador.minerarBloco('10c3e7593eb0525c10652c835e85f8e709e897bf891ef9fd9451c94755690ccf')
+
+current1 = minerador.minerarBloco('10c3e7593eb0525c10652c835e85f8e709e897bf891ef9fd9451c94755690ccf')
 #current2 = minerador.minerarBloco('85d7036e4451228c64951b78a16e9de0fd360c852f5b85601b1fbb7b0e322b8a')

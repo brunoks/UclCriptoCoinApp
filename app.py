@@ -47,7 +47,7 @@ def consensus():
     responses = grequests.map(rs)
 
     for response in responses:
-        if response != None and response.status_code == 200:
+        if response is None & response.status_code == 200:
             blocks = response.json()
             if len(blocks) > current_len:
                 blockchain.clear()
