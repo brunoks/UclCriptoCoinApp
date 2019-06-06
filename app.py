@@ -23,20 +23,9 @@ peers = set()
 app = Flask(__name__)
 domain = 'https://uclcriptocoin.herokuapp.com'
 
-@app.route('/fake', methods=['GET'])
-def fake():
-
-    data = [
-        {"address":"https://uclcriptocoin.herokuapp.com"},
-        {"address":"https://uclcriptocoin2.herokuapp.com"}
-    ]
-    return jsonify(data), 200
-
 @app.route('/get_nodes', methods=['GET'])
 def get_nodes():
-    #requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text, 200
-
-    return requests.get(f'{domain}/fake').text
+    return requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text, 200
 
 def consensus():
     """
@@ -69,7 +58,7 @@ def consensus():
 
     return result
 
-#consensus()
+consensus()
 
 @app.route('/consensus', methods=['GET'])
 def get_consensus():

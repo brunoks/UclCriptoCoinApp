@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="479af64f-4dd9-4b96-99be-691ebc539c2e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uclcoin/minerador.py" beforeDir="false" afterPath="$PROJECT_DIR$/uclcoin/minerador.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,8 +16,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="269" column="15" selection-start-line="269" selection-start-column="15" selection-end-line="269" selection-end-column="15" />
+            <state relative-caret-position="268">
+              <caret line="41" column="23" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -51,8 +52,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/uclcoin/minerador.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="22" column="15" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
+            <state relative-caret-position="337">
+              <caret line="40" column="23" lean-forward="true" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="23" />
               <folding>
                 <element signature="e#0#46#0" expanded="true" />
               </folding>
@@ -117,7 +118,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>== 3</find>
       <find>000e50ba30a2093d19f955c56748c55470c661aaa1015a03e1e8646764de1f81</find>
       <find>invalid</find>
       <find>get_json</find>
@@ -137,7 +137,6 @@
       <find>consen</find>
       <find>fake</find>
       <find>get_nodes</find>
-      <find>chain</find>
       <find>127</find>
       <find>dict</find>
       <find>add_block</find>
@@ -147,6 +146,8 @@
       <find>validate</find>
       <find>cheguei</find>
       <find>minable</find>
+      <find>chain</find>
+      <find>/chain</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -317,12 +318,12 @@
       <workItem from="1559263095981" duration="9169000" />
       <workItem from="1559418114285" duration="710000" />
       <workItem from="1559492704420" duration="10315000" />
-      <workItem from="1559516828275" duration="20267000" />
+      <workItem from="1559516828275" duration="21201000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55735000" />
+    <option name="totallyTimeSpent" value="56669000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -335,14 +336,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2746781" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2746781" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.25180724" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.25180724" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -351,7 +351,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5007153" side_tool="true" weight="0.32891566" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49928468" weight="0.32891566" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49928468" visible="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -366,7 +366,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Hiroku$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1559614915740" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/Hiroku$Hiroku.coverage" NAME="Hiroku Coverage Results" MODIFIED="1559098452324" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/Hiroku$minerador.coverage" NAME="minerador Coverage Results" MODIFIED="1559785422050" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/uclcoin" />
+    <SUITE FILE_PATH="coverage/Hiroku$minerador.coverage" NAME="minerador Coverage Results" MODIFIED="1559786708406" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/uclcoin" />
     <SUITE FILE_PATH="coverage/Hiroku$blockchain.coverage" NAME="blockchain Coverage Results" MODIFIED="1559614766248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/uclcoin" />
   </component>
   <component name="editorHistoryManager">
@@ -420,9 +420,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deploy.cmd">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -447,17 +444,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/deploy.cmd">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="269" column="15" selection-start-line="269" selection-start-column="15" selection-end-line="269" selection-end-column="15" />
+        <state relative-caret-position="268">
+          <caret line="41" column="23" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/uclcoin/minerador.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="22" column="15" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
+        <state relative-caret-position="337">
+          <caret line="40" column="23" lean-forward="true" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="23" />
           <folding>
             <element signature="e#0#46#0" expanded="true" />
           </folding>
