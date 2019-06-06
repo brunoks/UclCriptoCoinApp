@@ -25,7 +25,7 @@ domain = 'https://uclcriptocoin.herokuapp.com'
 
 @app.route('/get_nodes', methods=['GET'])
 def get_nodes():
-    return requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text, 200
+    return requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text
 
 def consensus():
     """
@@ -36,18 +36,13 @@ def consensus():
 
     result = False
     current_len = blockchain._blocks.count()
-    current_transaction_let = blockchain
-    print(current_transaction_let)
-    nodes = json.loads(get_nodes())
 
-    for node in nodes:
-        node["address"]
     rs = (grequests.get(f'{node["address"]}/chain') for node in json.loads(get_nodes()))
 
     responses = grequests.map(rs)
 
     for response in responses:
-        if response is None & response.status_code == 200:
+        if response != None and response.status_code == 200:
             blocks = response.json()
             if len(blocks) > current_len:
                 blockchain.clear()
