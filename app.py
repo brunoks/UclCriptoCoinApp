@@ -311,8 +311,7 @@ def add_transaction2(private_key, public_key, value):
         transaction = wallet.create_transaction(public_key, float(value))
 
         for node in json.loads(get_nodes()):
-            print(dict(transaction))
-            status = (requests.post(f'{node["address"]}/transaction', data=json.loads(transaction)))
+            status = (requests.post(f'{node["address"]}/transaction', data=json.loads(dict(transaction))))
             print(status)
 
         blockchain.add_transaction(transaction)
