@@ -312,7 +312,7 @@ def add_transaction2(private_key, public_key, value):
 
         for node in json.loads(get_nodes()):
             print(dict(transaction))
-            status = (requests.post(f'{node["address"]}/transaction', data=dict(transaction)))
+            status = (requests.post(f'{node["address"]}/transaction', data=json.loads(dict(transaction))))
             print(status)
 
         blockchain.add_transaction(transaction)
