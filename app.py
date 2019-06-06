@@ -35,6 +35,7 @@ def fake():
 @app.route('/get_nodes', methods=['GET'])
 def get_nodes():
     #requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text, 200
+
     return requests.get(f'{domain}/fake').text
 
 def consensus():
@@ -237,7 +238,7 @@ def add_block():
     try:
         block_json = request.get_json(force=True)
         block = Block.from_dict(block_json)
-        rs = (grequests.post(f'{ node if node != domain}/validate', data=request.data) for node in json.loads(get_nodes()))
+        rs = (grequests.post(f'{node["address"]}/validate', data=request.data) for node in json.loads(get_nodes()))
         responses = grequests.map(rs)
         validated_chains = 1
         for response in responses:

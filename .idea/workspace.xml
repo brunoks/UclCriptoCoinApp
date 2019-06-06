@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="479af64f-4dd9-4b96-99be-691ebc539c2e" name="Default Changelist" comment="" />
+    <list default="true" id="479af64f-4dd9-4b96-99be-691ebc539c2e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="239" column="36" selection-start-line="239" selection-start-column="32" selection-end-line="239" selection-end-column="36" />
+            <state relative-caret-position="263">
+              <caret line="240" column="35" selection-start-line="240" selection-start-column="35" selection-end-line="240" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -315,12 +317,12 @@
       <workItem from="1559263095981" duration="9169000" />
       <workItem from="1559418114285" duration="710000" />
       <workItem from="1559492704420" duration="10315000" />
-      <workItem from="1559516828275" duration="18883000" />
+      <workItem from="1559516828275" duration="19196000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54351000" />
+    <option name="totallyTimeSpent" value="54664000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -364,7 +366,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Hiroku$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1559614915740" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/Hiroku$Hiroku.coverage" NAME="Hiroku Coverage Results" MODIFIED="1559098452324" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/Hiroku$minerador.coverage" NAME="minerador Coverage Results" MODIFIED="1559783901607" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/uclcoin" />
+    <SUITE FILE_PATH="coverage/Hiroku$minerador.coverage" NAME="minerador Coverage Results" MODIFIED="1559784153782" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/uclcoin" />
     <SUITE FILE_PATH="coverage/Hiroku$blockchain.coverage" NAME="blockchain Coverage Results" MODIFIED="1559614766248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/uclcoin" />
   </component>
   <component name="editorHistoryManager">
@@ -457,8 +459,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="239" column="36" selection-start-line="239" selection-start-column="32" selection-end-line="239" selection-end-column="36" />
+        <state relative-caret-position="263">
+          <caret line="240" column="35" selection-start-line="240" selection-start-column="35" selection-end-line="240" selection-end-column="35" />
         </state>
       </provider>
     </entry>
