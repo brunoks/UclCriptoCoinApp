@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="479af64f-4dd9-4b96-99be-691ebc539c2e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uclcoin/minerador.py" beforeDir="false" afterPath="$PROJECT_DIR$/uclcoin/minerador.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="263">
-              <caret line="240" column="35" selection-start-line="240" selection-start-column="35" selection-end-line="240" selection-end-column="35" />
+            <state relative-caret-position="248">
+              <caret line="269" column="15" lean-forward="true" selection-start-line="269" selection-start-column="15" selection-end-line="269" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -51,8 +51,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/uclcoin/minerador.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="24" column="79" selection-start-line="24" selection-start-column="79" selection-end-line="24" selection-end-column="79" />
+            <state relative-caret-position="271">
+              <caret line="24" column="49" selection-start-line="24" selection-start-column="49" selection-end-line="24" selection-end-column="49" />
               <folding>
                 <element signature="e#0#46#0" expanded="true" />
               </folding>
@@ -117,8 +117,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>peers</find>
-      <find>minable</find>
       <find>transaction</find>
       <find>== 3</find>
       <find>000e50ba30a2093d19f955c56748c55470c661aaa1015a03e1e8646764de1f81</find>
@@ -147,6 +145,8 @@
       <find>pending</find>
       <find>/block</find>
       <find>status_code</find>
+      <find>validate</find>
+      <find>cheguei</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -317,12 +317,12 @@
       <workItem from="1559263095981" duration="9169000" />
       <workItem from="1559418114285" duration="710000" />
       <workItem from="1559492704420" duration="10315000" />
-      <workItem from="1559516828275" duration="19196000" />
+      <workItem from="1559516828275" duration="20024000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54664000" />
+    <option name="totallyTimeSpent" value="55492000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -337,12 +337,12 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2746781" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2746781" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.25180724" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.25180724" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -366,7 +366,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Hiroku$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1559614915740" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/Hiroku$Hiroku.coverage" NAME="Hiroku Coverage Results" MODIFIED="1559098452324" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/Hiroku$minerador.coverage" NAME="minerador Coverage Results" MODIFIED="1559784153782" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/uclcoin" />
+    <SUITE FILE_PATH="coverage/Hiroku$minerador.coverage" NAME="minerador Coverage Results" MODIFIED="1559784858966" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/uclcoin" />
     <SUITE FILE_PATH="coverage/Hiroku$blockchain.coverage" NAME="blockchain Coverage Results" MODIFIED="1559614766248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/uclcoin" />
   </component>
   <component name="editorHistoryManager">
@@ -440,16 +440,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/uclcoin/minerador.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="24" column="79" selection-start-line="24" selection-start-column="79" selection-end-line="24" selection-end-column="79" />
-          <folding>
-            <element signature="e#0#46#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/grequests.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="178">
@@ -457,10 +447,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/uclcoin/minerador.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="24" column="49" selection-start-line="24" selection-start-column="49" selection-end-line="24" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="240" column="35" selection-start-line="240" selection-start-column="35" selection-end-line="240" selection-end-column="35" />
+        <state relative-caret-position="248">
+          <caret line="269" column="15" lean-forward="true" selection-start-line="269" selection-start-column="15" selection-end-line="269" selection-end-column="15" />
         </state>
       </provider>
     </entry>
