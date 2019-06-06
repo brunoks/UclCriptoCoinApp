@@ -18,52 +18,22 @@ from hashlib import sha256
 server = MongoClient('mongodb+srv://bbk:123@cluster0-3e65c.mongodb.net/test?retryWrites=true&w=majority')
 uclcoindb = server.uclcoin
 blockchain = BlockChain(mongodb=uclcoindb)
+domain = 'https://uclcriptocoin.herokuapp.com' #Insert your domain
+consecutives_invalids_blocks = 0
 
-peers = set()
 app = Flask(__name__)
-domain = 'https://uclcriptocoin.herokuapp.com'
-
-@app.route('/get_nodes', methods=['GET'])
-def get_nodes():
-    return requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text
-
-def consensus():
-    """
-    Our simple consnsus algorithm. If a longer valid chain is
-    found, our chain is replaced with it.
-    """
-    global blockchain
-
-    result = False
-    current_len = blockchain._blocks.count()
-
-    rs = (grequests.get(f'{node["address"]}/chain') for node in json.loads(get_nodes()))
-
-    responses = grequests.map(rs)
-
-    for response in responses:
-        if response != None and response.status_code == 200:
-            blocks = response.json()
-            if len(blocks) > current_len:
-                blockchain.clear()
-                for block in blocks:
-                    temp_block = Block.from_dict(block)
-                    blockchain.add_block(temp_block)
-                result = True
-
-    return result
-
-#consensus()
 
 @app.route('/consensus', methods=['GET'])
 def get_consensus():
     local_consensus = consensus()
     if local_consensus:
-        print("Consensus updated")
         return jsonify({'message': f'Consensus updated'}), 201
-    print("Consensus already updated")
     return jsonify({'message': f'Consensus already updated'}), 400
 
+
+# endpoint to return the node's copy of the chain.
+# Our application will be using this endpoint to query
+# all the posts to display.
 @app.route('/chain', methods=['GET'])
 def get_chain():
     # make sure we've the longest chain
@@ -80,89 +50,10 @@ def get_chain():
     jsonText = json.dumps(chain_data, sort_keys=True, indent=4)
     return jsonText.replace("\"*","").replace("*\"","").replace("\\\"","\"")
 
-
-def extract_values(obj, key):
-    """Pull all values of specified key from nested JSON."""
-    arr = []
-
-    def extract(obj, arr, key):
-        """Recursively search for values of key in JSON tree."""
-        if isinstance(obj, dict):
-            for k, v in obj.items():
-                if isinstance(v, (dict, list)):
-                    extract(v, arr, key)
-                elif k == key:
-                    arr.append(v)
-        elif isinstance(obj, list):
-            for item in obj:
-                extract(item, arr, key)
-        return arr
-
-    results = extract(obj, arr, key)
-    return results
-
-# endpoint to add new peers to the network.
-@app.route('/register_node', methods=['POST'])
-def register_new_peers():
-    address = request.get_json()["address"]
-    if not address:
-        return "Invalid data", 400
-
-    # Add the node to the peer list
-    peers.add(address)
-
-    # Return the consensus blockchain to the newly registered node
-    # so that he can sync
-    return get_chain()
-
-
-@app.route('/register_with', methods=['POST'])
-def register_with_existing_node():
-    """
-    Internally calls the `register_node` endpoint to
-    register current node with the node specified in the
-    request, and sync the blockchain as well as peer data.
-    """
-    address = json(request.get_json())["address"]
-    if not address:
-        return "Invalid data", 400
-
-    data = {"address": request.host_url}
-    headers = {'Content-Type': "application/json"}
-
-    # Make a request to register with remote node and obtain information
-    response = requests.post(address + "/register_node",
-                             data=json.dumps(data), headers=headers)
-
-    if response.status_code == 200:
-        global blockchain
-        global peers
-        # update chain and the peers
-        chain_dump = response.json()['chain']
-        blockchain = create_chain_from_dump(chain_dump)
-        peers.update(response.json()['peers'])
-        return "Registration successful", 200
-    else:
-        # if something goes wrong, pass it on to the API response
-        return response.content, response.status_code
-
-
-def create_chain_from_dump(chain_dump):
-    blockchain = BlockChain(mongodb=uclcoindb)
-    for idx, block_data in enumerate(chain_dump):
-        block = Block(block_data["index"],
-                      block_data["transactions"],
-                      block_data["previous_hash"],
-                      block_data["timestamp"])
-        proof = block_data['hash']
-        if idx > 0:
-            added = blockchain.add_block(block, proof)
-            if not added:
-                raise Exception("The chain dump is tampered!!")
-        else:  # the block is a genesis block, no verification needed
-            blockchain.chain.append(block)
-    return blockchain
-
+# Get Nodes
+@app.route('/get_nodes', methods=['GET'])
+def get_nodes():
+    return requests.get('https://dnsblockchainucl.azurewebsites.net/chains').text
 
 # endpoint to add a block mined by someone else to
 # the node's chain. The block is first verified by the node
@@ -170,11 +61,33 @@ def create_chain_from_dump(chain_dump):
 @app.route('/add_block', methods=['POST'])
 def verify_and_add_block():
     block_data = request.get_json()
-    print(block_data)
     block = Block.from_dict(block_data)
     blockchain.add_block(block)
 
     return "The block was added", 200
+
+def consensus():
+    """
+    Our simple consnsus algorithm. If a longer valid chain is
+    found, our chain is replaced with it.
+    """
+    global blockchain
+
+    result = False
+    current_len = blockchain._blocks.count()
+    rs = (grequests.get(f'{node["address"]}/chain') for node in json.loads(get_nodes()))
+    responses = grequests.map(rs)
+    for response in responses:
+        if response != None and response.status_code == 200:
+            blocks = response.json()
+            if len(blocks) > current_len:
+                blockchain.clear()
+                for block in blocks:
+                    temp_block = Block.from_dict(block)
+                    blockchain.add_block(temp_block)
+                result = True
+
+    return result
 
 def announce_new_block(block):
     """
@@ -216,33 +129,45 @@ def get_block(index):
 
     return jsonify(dict(block)), 200
 
-
 @app.route('/block', methods=['POST'])
 def add_block():
     try:
         block_json = request.get_json(force=True)
         block = Block.from_dict(block_json)
+        blockchain.validate_block(block)
         rs = (grequests.post(f'{node["address"]}/validate', data=request.data) for node in json.loads(get_nodes()))
         responses = grequests.map(rs)
         validated_chains = 1
+        unvalidated_chains = 0
+        total_valids = 2
+        total_unvalids = 1
         for response in responses:
-            print(response)
-            if response != None & response.status_code == 201:
-                validated_chains += 1
-                # 2 porque esta já conta como uma
-            if validated_chains == 2:
-                break
-
-        if validated_chains == 2:
-            print('cheguei')
+            if response != None:
+                if response.status_code == 201:
+                    validated_chains += 1
+                elif response.status_code == 400:
+                    unvalidated_chains += 1
+                    if unvalidated_chains == total_unvalids:
+                        break
+                if validated_chains == total_valids:
+                    break
+        if validated_chains == total_valids:
             blockchain.add_block(block)
             announce_new_block(block_json)
             return jsonify({'message': f'Block #{block.index} added to the Blockchain'}), 201
+        elif unvalidated_chains == total_unvalids:
+            consensus()
+            return jsonify({'message': 'Blockchain was Outdated'}), 400
         else:
             return jsonify({'message': f'Block rejected: {block}'}), 400
     except (KeyError, TypeError, ValueError):
         return jsonify({'message': f'Invalid block format'}), 400
     except BlockchainException as bce:
+        consecutives_invalids_blocks += 1
+        if consecutives_invalids_blocks == 3:
+            consensus()
+            consecutives_invalids_blocks = 0
+            return jsonify({'message': 'Blockchain was Outdated'}), 400
         return jsonify({'message': f'Block rejected: {block}'}), 400
 
 
@@ -264,6 +189,7 @@ def validate_block():
     try:
         block = request.get_json(force=True)
         block = Block.from_dict(block)
+        BlockChain.validate_block(block)
         return jsonify({'message': f'Block #{block.index} is a valid block!'}), 201
     except (KeyError, TypeError, ValueError):
         return jsonify({'message': f'Invalid block format'}), 400
@@ -294,9 +220,7 @@ def add_transaction():
 def add_transaction2(private_key, public_key, value):
     try:
         wallet = KeyPair(private_key)
-
         transaction = wallet.create_transaction(public_key, float(value))
-
         blockchain.add_transaction(transaction)
         return jsonify({'message': f'Pending transaction {transaction.tx_hash} added to the Blockchain'}), 201
     except BlockchainException as bce:
