@@ -10,6 +10,7 @@ class Minerador(object):
 
         wallet = KeyPair(address)
         r = requests.get('https://uclcriptocoin.herokuapp.com/block/minable/' + wallet.public_key)
+        print(r.text)
         last_block = json.loads(r.text)
         block = Block.from_dict(last_block["block"])
         difficulty = last_block["difficulty"]

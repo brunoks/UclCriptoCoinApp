@@ -251,7 +251,6 @@ def get_minable_block(address):
     if not re.match(r'[\da-f]{66}$', address):
         return jsonify({'message': 'Invalid address'}), 400
 
-    consensus()
     block = blockchain.get_minable_block(address)
     response = {
         'difficulty': blockchain.calculate_hash_difficulty(),
