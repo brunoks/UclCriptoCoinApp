@@ -53,7 +53,7 @@ def consensus():
 
     return result
 
-consensus()
+#consensus()
 
 @app.route('/consensus', methods=['GET'])
 def get_consensus():

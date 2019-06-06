@@ -24,7 +24,7 @@ class Minerador(object):
 
         r = requests.post('https://uclcriptocoin.herokuapp.com/block',data=data,json=True)
         print("ceguei",r.text)
-        #self.pesquisarBlocoPendente()
+        self.pesquisarBlocoPendente()
 
     def pesquisarBlocoPendente(self):
         r = requests.get('https://uclcriptocoin.herokuapp.com/pending_transactions')
