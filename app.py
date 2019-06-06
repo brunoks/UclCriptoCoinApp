@@ -268,7 +268,6 @@ def get_minable_block(address):
         return jsonify({'message': 'Invalid address'}), 400
 
     consensus()
-    blockchain.pending_transactions.drop()
     block = blockchain.get_minable_block(address)
     response = {
         'difficulty': blockchain.calculate_hash_difficulty(),
