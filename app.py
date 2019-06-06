@@ -263,6 +263,7 @@ def get_minable_block(address):
     if not re.match(r'[\da-f]{66}$', address):
         return jsonify({'message': 'Invalid address'}), 400
 
+    consensus()
     block = blockchain.get_minable_block(address)
     response = {
         'difficulty': blockchain.calculate_hash_difficulty(),
@@ -308,10 +309,6 @@ def add_transaction2(private_key, public_key, value):
         wallet = KeyPair(private_key)
 
         transaction = wallet.create_transaction(public_key, float(value))
-
-        for node in json.loads(get_nodes()):
-            status = (grequests.post(f'{node["address"]}/transaction', data=json.loads(str(transaction))))
-            print(status)
 
         blockchain.add_transaction(transaction)
         return jsonify({'message': f'Pending transaction {transaction.tx_hash} added to the Blockchain'}), 201
