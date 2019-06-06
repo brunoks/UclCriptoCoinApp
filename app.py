@@ -239,7 +239,6 @@ def add_block():
         responses = grequests.map(rs)
         validated_chains = 1
         for response in responses:
-            print(response.status_code)
             if response.status_code == 201:
                 validated_chains += 1
                 # 2 porque esta já conta como uma
@@ -311,7 +310,7 @@ def add_transaction2(private_key, public_key, value):
         transaction = wallet.create_transaction(public_key, float(value))
 
         for node in json.loads(get_nodes()):
-            status = (requests.post(f'{node["address"]}/transaction', data=json.loads(str(dict(transaction)))))
+            status = (grequests.post(f'{node["address"]}/transaction', data=json.loads(str(transaction))))
             print(status)
 
         blockchain.add_transaction(transaction)
