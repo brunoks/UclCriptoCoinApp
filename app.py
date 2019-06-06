@@ -74,7 +74,9 @@ def consensus():
 def get_consensus():
     local_consensus = consensus()
     if local_consensus:
+        print("Consensus updated")
         return jsonify({'message': f'Consensus updated'}), 201
+    print("Consensus already updated")
     return jsonify({'message': f'Consensus already updated'}), 400
 
 @app.route('/chain', methods=['GET'])
