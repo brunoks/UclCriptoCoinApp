@@ -15,7 +15,7 @@ import os
 import numpy as np
 from hashlib import sha256
 
-server = MongoClient('mongodb+srv://bruno:123@cluster0-pwjcg.mongodb.net/test?retryWrites=true&w=majority')
+server = MongoClient('mongodb+srv://bbk:123@cluster0-3e65c.mongodb.net/test?retryWrites=true&w=majority')
 uclcoindb = server.uclcoin
 blockchain = BlockChain(mongodb=uclcoindb)
 domain = 'https://uclcriptocoin2.herokuapp.com' #Insert your domain
