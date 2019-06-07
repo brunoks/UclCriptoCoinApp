@@ -260,11 +260,22 @@ def get_ranking():
     ranking = sorted(ranking.items(), key=lambda x: x[1], reverse=True)
     return jsonify(ranking), 200
 
-@app.route('/keypair', methods=['GET'])
-def generate_key():
+@app.route('/generate_wallet', methods=['GET'])
+def generateWallet():
     wallet = KeyPair()
-    rs =  [{'private_key':f'{wallet.private_key}'},{'public_key':f'{wallet.public_key}'}]
-    return jsonify(rs), 200
+    data = {
+        'private_key':wallet.private_key,
+        'public_key':wallet.public_key
+    }
+    return jsonify(data), 200
+
+@app.route('/generate_public_key/<address>', methods=['GET'])
+def generatePublicKey(address):
+    wallet = KeyPair(address)
+    data = {
+        'public_key':wallet.public_key
+    }
+    return jsonify(data), 200
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
