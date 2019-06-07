@@ -28,10 +28,10 @@ class Minerador(object):
 
         data = r.json()
         if int(len(data['transactions']) > 0):
-            self.minerarBloco('10c3e7593eb0525c10652c835e85f8e709e897bf891ef9fd9451c94755690ccf')
+            self.minerarBloco("")
         else:
             return 'Não tem mais bloco'
 
 minerador = Minerador()
 
-minerador.minerarBloco("10c3e7593eb0525c10652c835e85f8e709e897bf891ef9fd9451c94755690ccf")
+minerador.minerarBloco("")
