@@ -39,16 +39,16 @@ def get_chain():
     # make sure we've the longest chain
     chain_data = []
     for block in blockchain.blocks:
-       chain_data.append(block.__dict__)
-
+        chain_data.append(block.__dict__)
+    
     for chain in chain_data:
         for i,transaction in enumerate(chain['transactions']):
             tempTrans = chain['transactions'][i]
             jsonTrans = json.dumps(tempTrans.__str__())
             chain['transactions'][i] = jsonTrans.replace("\"","*").replace("'","\"")
 
-    jsonText = json.dumps(chain_data, sort_keys=True, indent=4)
-    return jsonText.replace("\"*","").replace("*\"","").replace("\\\"","\"")
+jsonText = json.dumps(chain_data, sort_keys=True, indent=4)
+return jsonText.replace("\"*","").replace("*\"","").replace("\\\"","\"")
 
 # Get Nodes
 @app.route('/get_nodes', methods=['GET'])
@@ -63,16 +63,16 @@ def verify_and_add_block():
     block_data = request.get_json()
     block = Block.from_dict(block_data)
     blockchain.add_block(block)
-
+    
     return "The block was added", 200
 
 def consensus():
     """
-    Our simple consnsus algorithm. If a longer valid chain is
-    found, our chain is replaced with it.
-    """
+        Our simple consnsus algorithm. If a longer valid chain is
+        found, our chain is replaced with it.
+        """
     global blockchain
-
+    
     result = False
     current_len = blockchain._blocks.count()
     rs = (grequests.get(f'{node["address"]}/chain') for node in json.loads(get_nodes()))
@@ -81,20 +81,21 @@ def consensus():
         if response != None and response.status_code == 200:
             blocks = response.json()
             if len(blocks) > current_len:
-                blockchain.clear()    
+                current_len = len(blocks)
+                blockchain.clear()
                 for block in blocks:
                     temp_block = Block.from_dict(block)
                     blockchain.add_block(temp_block)
                 result = True
 
-    return result
+return result
 
 def announce_new_block(block):
     """
-    A function to announce to the network once a block has been mined.
-    Other blocks can simply verify the proof of work and add it to their
-    respective chains.
-    """ 
+        A function to announce to the network once a block has been mined.
+        Other blocks can simply verify the proof of work and add it to their
+        respective chains.
+        """
     for node in json.loads(get_nodes()):
         address = node['address']
         if address != domain:
@@ -106,7 +107,7 @@ def announce_new_block(block):
 def get_balance(address):
     if not re.match(r'[\da-f]{66}$', address):
         return jsonify({'message': 'Invalid address'}), 400
-
+    
     balance = blockchain.get_balance(address)
     return jsonify({'balance': balance}), 200
 
@@ -126,7 +127,7 @@ def get_block(index):
         block = blockchain.get_block_by_index(int(index))
     if not block:
         return jsonify({'message': 'Block not found'}), 404
-
+    
     return jsonify(dict(block)), 200
 
 @app.route('/block', methods=['POST'])
@@ -134,49 +135,41 @@ def add_block():
     try:
         block_json = request.get_json(force=True)
         block = Block.from_dict(block_json)
-        blockchain.validate_block(block)
         rs = (grequests.post(f'{node["address"]}/validate', data=request.data) for node in json.loads(get_nodes()))
         responses = grequests.map(rs)
         validated_chains = 1
         unvalidated_chains = 0
         total_valids = 2
-        total_unvalids = 5
+        total_unvalids = 4
         for response in responses:
-            if response != None:
-                if response.status_code == 201:
-                    validated_chains += 1
-                elif response.status_code == 400:
-                    unvalidated_chains += 1
-                    if unvalidated_chains == total_unvalids:
-                        break
-                if validated_chains == total_valids:
-                    break      
-        if validated_chains == total_valids:
-            blockchain.add_block(block)
-            announce_new_block(block_json)
-            return jsonify({'message': f'Block #{block.index} added to the Blockchain'}), 201
-        elif unvalidated_chains == total_unvalids:    
+            if response.status_code == 201:
+                validated_chains += 1
+            if validated_chains == total_valids:
+                break
+            elif response.status_code == 400:
+                unvalidated_chains += 1
+                if unvalidated_chains == total_unvalids:
+                    break
+if validated_chains == total_valids:
+    blockchain.add_block(block)
+    announce_new_block(block_json)
+    return jsonify({'message': f'Block #{block.index} added to the Blockchain'}), 201
+        elif unvalidated_chains == total_unvalids:
             consensus()
             return jsonify({'message': 'Blockchain was Outdated'}), 400
-        else:
-            return jsonify({'message': f'Block rejected: {block}'}), 400
-    except (KeyError, TypeError, ValueError):
-        return jsonify({'message': f'Invalid block format'}), 400
+    else:
+        return jsonify({'message': f'Block rejected: {block}'}), 400
+except (KeyError, TypeError, ValueError):
+    return jsonify({'message': f'Invalid block format'}), 400
     except BlockchainException as bce:
-        consecutives_invalids_blocks += 1
-        if consecutives_invalids_blocks == 5:
-            consensus()
-            consecutives_invalids_blocks = 0
-            return jsonify({'message': 'Blockchain was Outdated'}), 400
         return jsonify({'message': f'Block rejected: {block}'}), 400
 
 
 @app.route('/block/minable/<address>', methods=['GET'])
 def get_minable_block(address):
-
     if not re.match(r'[\da-f]{66}$', address):
         return jsonify({'message': 'Invalid address'}), 400
-
+    
     block = blockchain.get_minable_block(address)
     response = {
         'difficulty': blockchain.calculate_hash_difficulty(),
@@ -190,13 +183,11 @@ def validate_block():
     try:
         block = request.get_json(force=True)
         block = Block.from_dict(block)
-        BlockChain.validate_block(block)
         return jsonify({'message': f'Block #{block.index} is a valid block!'}), 201
     except (KeyError, TypeError, ValueError):
         return jsonify({'message': f'Invalid block format'}), 400
     except BlockchainException as bce:
         return jsonify({'message': f'Invalid block: {bce}'}), 400
-
 
 @app.route('/transaction', methods=['POST'])
 def add_transaction():
@@ -216,7 +207,6 @@ def add_transaction():
     except BlockchainException as bce:
         return jsonify({'message': f'Transaction rejected: {bce}'}), 400
 
-
 @app.route('/transaction/<private_key>/<public_key>/<value>', methods=['POST'])
 def add_transaction2(private_key, public_key, value):
     try:
@@ -226,7 +216,6 @@ def add_transaction2(private_key, public_key, value):
         return jsonify({'message': f'Pending transaction {transaction.tx_hash} added to the Blockchain'}), 201
     except BlockchainException as bce:
         return jsonify({'message': f'Transaction rejected: {bce}'}), 400
-
 
 @app.route('/avgtimes', methods=['GET'])
 def get_averages():
@@ -259,6 +248,18 @@ def get_ranking():
         ranking[cbt.destination] = ranking.get(cbt.destination, 0) + cbt.amount
     ranking = sorted(ranking.items(), key=lambda x: x[1], reverse=True)
     return jsonify(ranking), 200
+
+@app.route('/reset_blockchain', methods=['GET'])
+def get_reset_blockchain():
+    BlockChain.clear()
+    return jsonify({'message':'Blockchain reseted successfuly'}), 200
+
+@app.route('/reset_all_blockchains', methods=['GET'])
+def get_reset_all_blockchains():
+    for node in json.loads(get_nodes()):
+        address = node['address']
+        url = "{}/reset_blockchain".format(address)
+        requests.get(url)
 
 @app.route('/generate_wallet', methods=['GET'])
 def generateWallet():
