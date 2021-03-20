@@ -11,6 +11,6 @@ uclcoin==0.3.2
 pylibmc==1.5.2
 click==6.7
 itsdangerous==0.24
-Jinja2==2.10
+Jinja2==2.11.3
 MarkupSafe==1.0
 Werkzeug==0.14.1
