@@ -6,7 +6,7 @@ coincurve==11.0.0
 dnspython
 gevent==1.4.0
 grequests==0.3.0
-numpy==1.16.3
+numpy==1.22.0
 uclcoin==0.3.2
 pylibmc==1.5.2
 click==6.7
